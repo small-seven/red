@@ -9,4 +9,11 @@ The code is run and tested on the Artemis HPC server, 4090 lab-cluster server, a
 We used the pre-trained models for the [PyTorch package](https://pytorch.org/vision/main/models/generated/torchvision.models.resnet18.html). We used the CIFAR-10 and Tiny-ImageNet  datasets to fine-train and evaluate our proposed models and the baselines. 
 
 # Usage
-Examples of training and evaluation scripts can be found in `train.py` and `train_hyper.py`.
+Examples of training and evaluation scripts can be found in `train.py`:
+```
+python train.py --train_mode=red --train_batch_size=256 --epochs=120 --num_models=3 --lambda_1=10.0 --lambda_2=10.0 --plus_adv
+```
+and `train_hyper.py`:
+```
+python train_hyper.py --train_mode=hyper --train_batch_size=256 --epochs=120 --num_models=3 --lambda_1=10.0 --lambda_2=10.0 --plus_adv --embedding=128
+```
