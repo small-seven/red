@@ -21,7 +21,6 @@ class Embedding(nn.Module):
 
         h, k = self.z_num
 
-        # 2023-02-16: nn.ParameterList()无法DataParallel，所以要把nn.ParameterList改成nn.Module
         for i in range(h * k):
             self.register_parameter(f'z_list_{i}', Parameter(torch.rand(self.z_dim)))
 
