@@ -56,14 +56,14 @@ class MultiAverageMeter(object):
         return s.strip()
 
 
-# 获取参数数量
+# get the number of parameters
 def get_parameter_number(net):
     total_num = sum(p.numel() for p in net.parameters())
     trainable_num = sum(p.numel() for p in net.parameters() if p.requires_grad)
     print({'Total': total_num, 'Trainable': trainable_num})
 
 
-# 获取参数名称和shape
+# get parameter name and shape
 def get_named_paras(net):
     for name, parameters in net.named_parameters():
         print(name, ': ', parameters.size())
@@ -259,7 +259,7 @@ def save_ckpt(args, train_loss, model, epoch, opt, saved_name, logger):
 
 
 def init_model(model):
-    # 初始化模型权重
+    # initialize parameters
     for m in model.modules():
         if isinstance(m, (nn.Conv2d, nn.Linear)):
             nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
