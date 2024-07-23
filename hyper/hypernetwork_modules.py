@@ -12,7 +12,6 @@ class HyperNetwork(nn.Module):
         self.out_size = out_size
         self.in_size = in_size
 
-        # torch.fmod(input, div) 是求余数函数
         self.w1 = Parameter(torch.fmod(torch.randn((self.z_dim, self.out_size * self.f_size * self.f_size)), 2))
         self.b1 = Parameter(torch.fmod(torch.randn((self.out_size * self.f_size * self.f_size)), 2))
 
