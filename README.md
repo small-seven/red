@@ -2,7 +2,7 @@
 This repository contains code for our under-review paper "RED: Efficiently Boosting Ensemble Robustness via Random Sampling Inference".
 
 # Dependencies
-We were using PyTorch 1.10.0 for all the experiments. You can install other versions of PyTorch according to the cuda version of your computer/server.
+We were using PyTorch 2.2 for all the experiments. You can install other versions of PyTorch according to the cuda version of your computer/server.
 The code is run and tested on the Artemis HPC server, 4090 lab-cluster server, and NCI server with multiple GPUs. Running on a single GPU may need adjustments. The full dependencies are shown in `requirements.txt`.
 
 # Data and pre-trained models
