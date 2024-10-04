@@ -15,7 +15,7 @@ def simple_fix_random_seed(seed):
 def fix_random_seed(seed):
     random.seed(seed)  # random
     np.random.seed(seed)  # numpy
-    os.environ['PYTHONHASHSEED'] = str(seed)  # 设置python哈希种子，为了禁止hash随机化
+    os.environ['PYTHONHASHSEED'] = str(seed)
     torch.manual_seed(seed)  # torch cpu
     torch.cuda.manual_seed(seed)  # torch gpu
     torch.cuda.manual_seed_all(seed)  # torch all gpus
@@ -137,6 +137,7 @@ def get_args():
     parser.add_argument('--depth', type=int, default=18)
     parser.add_argument('--num_models', default=3, type=int)
     parser.add_argument('--proj_dir', type=str, default='/home/code/vit_rar')
+    parser.add_argument('--continuing', action='store_true', help="plus adv training")
     # dataset
     parser.add_argument('--dataset', type=str, default='CIFAR10',
                         choices=['CIFAR10', 'CIFAR100', 'SVHN', 'TinyImageNet'])
@@ -160,12 +161,9 @@ def get_args():
     parser.add_argument('--lambda_1', default=2.0, type=float)
     parser.add_argument('--lambda_2', default=0.5, type=float)
     # TRS specific hyperparameter
-    parser.add_argument('--plus_adv', action='store_true',
-                        help="TRS/RED hyperparameter")
-    parser.add_argument('--grad_clip', action='store_true',
-                        help="gradident clipping")
-    parser.add_argument('--at', action='store_true',
-                        help="plus adv training")
+    parser.add_argument('--plus_adv', action='store_true', help="TRS/RED hyperparameter")
+    parser.add_argument('--grad_clip', action='store_true', help="gradident clipping")
+    parser.add_argument('--at', action='store_true', help="plus adv training")
     parser.add_argument('--embedding', default=128, type=int,
                         help="hypernetwork parameters")
 
@@ -186,9 +184,10 @@ def get_args():
     parser.add_argument('--mul_gpus', action="store_true")
 
     # test
+    parser.add_argument('--load_dir', type=str, default='./checkpoint')
     parser.add_argument('--eval', action="store_true")
     parser.add_argument('--red_test', action="store_true")
-    parser.add_argument('--attack_type', type=str, default="nat")
+    parser.add_argument('--attack_type', type=str, default="all")
     # parser.add_argument('--attack_type', type=str, default="nat",
     #                     choices=['nat', 'fgsm', 'mifgsm', 'pgd', 'deepfool', 'cwl2', 'autoattack', 'all'])
 

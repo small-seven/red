@@ -14,7 +14,6 @@ args = Config(get_args())
 class ResNet18ForCIFAR(nn.Module):
     def __init__(self, pretrained=True):
         super(ResNet18ForCIFAR, self).__init__()
-        # use pretrained models
         if version.parse(torchvision.__version__) >= version.parse("0.13.0"):
             self.base_model = models.resnet18(weights="IMAGENET1K_V1")
         else:

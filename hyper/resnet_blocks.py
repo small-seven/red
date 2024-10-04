@@ -59,7 +59,6 @@ class ResNetBlock50(nn.Module):
 
     def forward(self, x, conv1_w=None, conv2_w=None, conv3_w=None, short_w=None):
         # torch.nn.functional.conv2d(input, weight, bias=None, stride=1, padding=0, dilation=1, groups=1)
-        # nn.Conv2d 是2D卷积层，而 F.conv2d 是2D卷积操作
         conv1_w = conv1_w.mean(dim=(2, 3), keepdim=True)
         out = F.relu(self.bn1(F.conv2d(x, conv1_w, stride=1, padding=0)))
         if short_w is not None:

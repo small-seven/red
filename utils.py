@@ -56,14 +56,12 @@ class MultiAverageMeter(object):
         return s.strip()
 
 
-# get the number of parameters
 def get_parameter_number(net):
     total_num = sum(p.numel() for p in net.parameters())
     trainable_num = sum(p.numel() for p in net.parameters() if p.requires_grad)
     print({'Total': total_num, 'Trainable': trainable_num})
 
 
-# get parameter name and shape
 def get_named_paras(net):
     for name, parameters in net.named_parameters():
         print(name, ': ', parameters.size())
@@ -195,24 +193,19 @@ def get_loaders(args):
 
 
 def get_opt2(model, args):
-    if args.train_mode == "vanilla":
-        return torch.optim.Adam(model.parameters(), lr=args.lr_max, weight_decay=args.weight_decay, eps=1e-7)
-    else:
-        param = list(model[0].parameters())
-        for i in range(1, args.num_models):
-            param.extend(list(model[i].parameters()))
-        return torch.optim.Adam(param, lr=args.lr_max, weight_decay=args.weight_decay, eps=1e-7)
+
+    param = list(model[0].parameters())
+    for i in range(1, args.num_models):
+        param.extend(list(model[i].parameters()))
+    return torch.optim.Adam(param, lr=args.lr_max, weight_decay=args.weight_decay, eps=1e-7)
 
 
 def get_opt(model, args):
-    if args.train_mode in ["vanilla", "dverge"]:
-        return torch.optim.SGD(model.parameters(), lr=args.lr_max, momentum=args.momentum,
-                               weight_decay=args.weight_decay)
-    else:
-        param = list(model[0].parameters())
-        for i in range(1, args.num_models):
-            param.extend(list(model[i].parameters()))
-        return torch.optim.SGD(param, lr=args.lr_max, momentum=args.momentum,
+
+    param = list(model[0].parameters())
+    for i in range(1, args.num_models):
+        param.extend(list(model[i].parameters()))
+    return torch.optim.SGD(param, lr=args.lr_max, momentum=args.momentum,
                                weight_decay=args.weight_decay)
 
 
@@ -259,7 +252,6 @@ def save_ckpt(args, train_loss, model, epoch, opt, saved_name, logger):
 
 
 def init_model(model):
-    # initialize parameters
     for m in model.modules():
         if isinstance(m, (nn.Conv2d, nn.Linear)):
             nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
